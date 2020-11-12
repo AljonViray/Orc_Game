@@ -6,15 +6,24 @@ using UnityEngine.UIElements;
 using UnityEngine.Tilemaps;
 public class PlayerMovement : MonoBehaviour
 {
+    public enum MovementType
+    {
+        AStar,
+        FreeMovement
+    }
+
+    public MovementType moveType = MovementType.FreeMovement;
+    public Squad selectedUnit;
     private Rigidbody2D rb;
     public Tilemap ground;
     public float speed = 10;
 
     private Vector3 target;
-    private Vector3 currentTileLocal;
+    private Vector3Int currentTileLocal;
     private List<Vector3> tLocal = new List<Vector3>();
     private List<Vector3> tGlobal = new List<Vector3>();
-
+    
+    
     public float movementTimer = 1f;
     private float startMovementTimer;
 
@@ -49,70 +58,124 @@ public class PlayerMovement : MonoBehaviour
         GetTileMap();
 
         InitializeGraph();
-        
     }
 
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        target = transform.position;
+        /*rb = GetComponent<Rigidbody2D>();
+        target = selectedUnit.position;
         currentTileLocal = ground.WorldToCell(target);
-        startMovementTimer = movementTimer;
+        selectedUnit.position = ground.CellToWorld(currentTileLocal);
+        startMovementTimer = movementTimer;*/
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
-            HandleInput();
-        }
-
-        if (path.Count != 0)
-        {
-            if (movementTimer < 0f)
+            if (!selectedUnit)
             {
-                transform.position = ground.CellToWorld(new Vector3Int((int)path[0].pos.x, (int)path[0].pos.y, 0));
-                path.RemoveAt(0);
-                movementTimer = startMovementTimer;
+                int layer_mask = LayerMask.GetMask("Squad");
+
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), 
+                    Vector2.zero, Mathf.Infinity, layer_mask);
+                if (hit.collider != null)
+                {
+                    Debug.Log(hit.transform.tag);
+
+                    if (hit.transform.CompareTag("Squad"))
+                    {
+                        selectedUnit = hit.transform.GetComponent<Squad>();
+                    }
+                }
             }
             else
             {
-                movementTimer -= Time.deltaTime;
+                selectedUnit.target = GetTarget();
+                selectedUnit = null;
             }
+ 
         }
-        /*transform.position = Vector3.Lerp(transform.position, target, speed * Time.deltaTime);
-        currentTileLocal = ground.WorldToCell(target);*/
+        
+        
+        /*if (path.Count != 0 && moveType == MovementType.AStar)
+        {
+ 
+            if (Vector3.Distance(target, selectedUnit.position) < 0.01f)
+            {
+                selectedUnit.position = ground.CellToWorld(new Vector3Int((int)path[0].pos.x, (int)path[0].pos.y, 0));
+                
+                path.RemoveAt(0);
+                if (path.Count != 0)
+                {
+                    target = ground.CellToWorld(new Vector3Int((int) path[0].pos.x, (int) path[0].pos.y, 0));
+                }
+
+            }
+            else
+            {
+                selectedUnit.position = Vector3.MoveTowards(selectedUnit.position, target, speed * Time.deltaTime);
+            }
+        }*/
+
+
     }
 
-    void HandleInput()
+    void HandleInputAStar()
+    {
+        /*Vector2 _target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3Int gridPos = ground.WorldToCell(_target);
+        gridPos.z = 0;
+        /*
+        Debug.Log("tile at: " + gridPos + " Has Tile: " + ground.HasTile(gridPos));
+        #1#
+        if (ground.HasTile(gridPos))
+        {
+            Vector3Int goal = ground.WorldToCell(_target);
+            goal.z = 0;
+            Vector3Int playerPos = ground.WorldToCell(selectedUnit.position);
+            playerPos.z = 0;
+            path = AStar(playerPos, goal);
+            target = ground.CellToWorld(playerPos);
+            ResetGraph();
+            
+        }*/
+    }
+    void HandleInputFree()
     {
         Vector2 _target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int gridPos = ground.WorldToCell(_target);
+        
         gridPos.z = 0;
         /*
         Debug.Log("tile at: " + gridPos + " Has Tile: " + ground.HasTile(gridPos));
         */
         if (ground.HasTile(gridPos))
         {
-            target = _target;
-            Vector3Int goal = ground.WorldToCell(target);
-            goal.z = 0;
-            Vector3Int playerPos = ground.WorldToCell(transform.position);
-            playerPos.z = 0;
-            path = AStar(playerPos, goal);
-            InitializeGraph();
-   
-            /*foreach (var node in path)
-            {
-                transform.position = ground.CellToWorld(new Vector3Int((int)node.pos.x, (int)node.pos.y, 0));
-                Debug.Log("path: " + node.pos);
-            }*/
+            target = new Vector3(_target.x, _target.y, 0);
         }
+    }
+
+    public Vector3 GetTarget()
+    {
+        Vector2 _target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3Int gridPos = ground.WorldToCell(_target);
+        
+        gridPos.z = 0;
+        if (ground.HasTile(gridPos))
+        {
+            return (new Vector3(_target.x, _target.y, 0));
+        }
+       
+        return Vector3.zero;
+        
+
         
     }
-    
+
     /// <summary>
     /// retrieves reference to all tiles in map.
     /// </summary>
@@ -133,21 +196,17 @@ public class PlayerMovement : MonoBehaviour
 
     List<Node> AStar(Vector3 start, Vector3 goal)
     {
-        Debug.Log("goal: " + goal);
         List<Node> path = new List<Node>();
         List<Node> frontier = new List<Node>();
         Node S = mapping[start];
         S.localCost = 0;
         S.globalCost = 0;
-        Debug.Log("localCost should be 0: " + mapping[start].localCost);
         /*
         path.Add(mapping[start]);
         */
         frontier.Add(mapping[start]);
-        Debug.Log(frontier.Count);
         while (frontier.Count > 0)
         {
-            Debug.Log("in while loop");
 
             Node current = frontier[0];
             
@@ -163,14 +222,13 @@ public class PlayerMovement : MonoBehaviour
                     n.globalCost = n.localCost + DistanceBetweenTiles(n.pos, goal);
 
                     frontier.Add(n);
-                    /*
-                    Debug.Log("Frontier size: "+ frontier.Count);
-                    */
                 }
             }
             
-
+            
+            frontier.Sort(delegate(Node node, Node node1) { return node.globalCost.CompareTo(node1.globalCost);});
             current.visited = true;
+
             frontier.RemoveAt(0);
         }
 
@@ -178,9 +236,9 @@ public class PlayerMovement : MonoBehaviour
         while (temp != S)
         {
             path.Insert(0, mapping[temp.pos]);
-            Debug.Log(path.Count);
             temp = mapping[temp.parent];
         }
+        path.Insert(0, mapping[S.pos]);
         
         return path;
     }
@@ -192,6 +250,17 @@ public class PlayerMovement : MonoBehaviour
             mapping[tile] = graph[graph.Count - 1];
         }
         CreateGraph();
+    }
+
+    private void ResetGraph()
+    {
+        foreach (var tile in tLocal)
+        {
+            mapping[tile].parent = Vector3.negativeInfinity;
+            mapping[tile].localCost = float.PositiveInfinity;
+            mapping[tile].globalCost = float.PositiveInfinity;
+            mapping[tile].visited = false;
+        }
     }
     
     private void CreateGraph()
