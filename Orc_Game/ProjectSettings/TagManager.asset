@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Squad
   - Enemy
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - 
   - 
   - Squad
-  - 
+  - Enemy
   - 
   - 
   - 
