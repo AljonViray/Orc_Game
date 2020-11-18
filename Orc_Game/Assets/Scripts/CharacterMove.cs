@@ -6,6 +6,15 @@ using UnityEngine;
 
 public class CharacterMove : MonoBehaviour
 {
+
+    public enum AttackMode
+    {
+        Ranged,
+        Melee
+    };
+
+    public AttackMode attackMode = AttackMode.Melee;
+    
     public float MOVEMENT_SPEED = 1;
     public float JUMP_FORCE = 200;
     Rigidbody2D _rigidbody;
@@ -14,11 +23,14 @@ public class CharacterMove : MonoBehaviour
     public float range = 1f;
 
     private LayerMask enemyMask;
+
+    private Camera _camera;
     // Start is called before the first frame update
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         enemyMask = LayerMask.GetMask("Enemy");
+        _camera = Camera.main;
     }
 
     // Update is called once per frame
@@ -42,11 +54,24 @@ public class CharacterMove : MonoBehaviour
             _rigidbody.AddForce(Vector2.up * JUMP_FORCE);
         }
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K) && attackMode == AttackMode.Melee)
         {
             AttackMelee();
         }
-
+        if (Input.GetMouseButtonDown(0) && attackMode == AttackMode.Ranged)
+        {
+            AttackRanged();
+        }
+        
+        if (Input.GetMouseButton(1))
+        {
+            Time.timeScale = 0.5f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+        
         if (_rigidbody.velocity.y < 1)
         {
             _rigidbody.gravityScale = 4;
@@ -65,20 +90,30 @@ public class CharacterMove : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, range, enemyMask);
             if (hit.collider != null)
             {
-                Debug.Log(hit.normal);
                 hit.rigidbody.AddForce((-hit.normal + Vector2.up) * 100f);                
             }
 
-            /*
-            coll.gameObject.GetComponent<Rigidbody2D>();
-        */
         }
     }
-
-    private void OnDrawGizmos()
+    
+    void AttackRanged()
     {
-        /*
+        Vector3 dir = _camera.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        Debug.DrawLine(transform.position, _camera.ScreenToWorldPoint(Input.mousePosition));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir.normalized, Mathf.Infinity, enemyMask);
+        _rigidbody.AddForce((-dir) * 100f);              
+
+        Debug.DrawRay(transform.position, dir.normalized, Color.black, 1f);
+        if (hit.collider != null)
+        {
+            hit.rigidbody.AddForce((-hit.normal + Vector2.up) * 100f);              
+        }
+        
+    }
+
+
+    private void OnDrawGizmos2D()
+    {
         Gizmos.DrawSphere(attackPos.position, range);
-    */
     }
 }
