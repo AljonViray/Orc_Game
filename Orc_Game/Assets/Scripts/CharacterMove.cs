@@ -69,16 +69,16 @@ public class CharacterMove : MonoBehaviour
                 hit.rigidbody.AddForce((-hit.normal + Vector2.up) * 100f);                
             }
 
-            /*
-            coll.gameObject.GetComponent<Rigidbody2D>();
-        */
+            
+            // coll.gameObject.GetComponent<Rigidbody2D>();
+
         }
     }
 
     private void OnDrawGizmos()
     {
-        /*
-        Gizmos.DrawSphere(attackPos.position, range);
-    */
+        
+        // Gizmos.DrawSphere(attackPos.position, range);
+    
     }
 }
