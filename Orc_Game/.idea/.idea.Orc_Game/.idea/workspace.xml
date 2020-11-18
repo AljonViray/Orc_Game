@@ -22,10 +22,7 @@
     <list default="true" id="386896ba-8221-4aaa-96bc-c744c3aa5900" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets_DevilsWorkShop/Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04/Textures/assets_1024x1024/isometric_0208.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets_DevilsWorkShop/Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04/Textures/assets_1024x1024/isometric_0208.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Omar_Test.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Omar_Test.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CharacterMove.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +42,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Squad.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Unit.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterMove.cs" />
       </list>
     </option>
   </component>
@@ -99,6 +97,7 @@
       <workItem from="1604183261678" duration="2963000" />
       <workItem from="1604430510623" duration="13382000" />
       <workItem from="1604546274569" duration="504000" />
+      <workItem from="1605655826958" duration="4611000" />
     </task>
     <servers />
   </component>

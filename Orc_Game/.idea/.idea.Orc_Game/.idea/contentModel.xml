@@ -4,12 +4,9 @@
     <e p="C:\_Projects\Orc_Game\Orc_Game" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="Assets_DevilsWorkShop" t="Include">
-          <e p="Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04" t="Include">
-            <e p="License.txt" t="Include" />
-          </e>
-        </e>
         <e p="Scripts" t="Include">
+          <e p="CameraFollow.cs" t="Include" />
+          <e p="CharacterMove.cs" t="Include" />
           <e p="PlayerMovement.cs" t="Include" />
           <e p="Squad.cs" t="Include" />
           <e p="Unit.cs" t="Include" />
