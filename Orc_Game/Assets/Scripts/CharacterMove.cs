@@ -35,6 +35,10 @@ public class CharacterMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (animator.GetBool("isAttacking") == true)
+        {
+            animator.SetBool("isAttacking", false);
+        }
         // left right movement
         var movement = Input.GetAxis("Horizontal");
         transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MOVEMENT_SPEED;
@@ -67,7 +71,8 @@ public class CharacterMove : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && attackMode == AttackMode.Ranged)
         {
             animator.SetBool("isAttacking", true);
-            AttackRanged();
+            AttackRanged();            
+
         }
         
         if (Input.GetMouseButton(1))
