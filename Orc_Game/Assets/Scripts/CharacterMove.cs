@@ -12,25 +12,24 @@ public class CharacterMove : MonoBehaviour
         Ranged,
         Melee
     };
-
     public AttackMode attackMode = AttackMode.Melee;
-    
     public float MOVEMENT_SPEED = 1;
     public float JUMP_FORCE = 200;
     Rigidbody2D _rigidbody;
     public Transform attackPos;
-
     public float range = 1f;
-
     private LayerMask enemyMask;
-
     private Camera _camera;
+    private Animator animator;
+
+
     // Start is called before the first frame update
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         enemyMask = LayerMask.GetMask("Enemy");
         _camera = Camera.main;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -41,11 +40,17 @@ public class CharacterMove : MonoBehaviour
         transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MOVEMENT_SPEED;
         if (movement > 0)
         {
+            animator.SetBool("isWalking", true);
             transform.eulerAngles = new Vector3(0f, 0f, 0f);
         }
         else if(movement < 0)
         {
+            animator.SetBool("isWalking", true);
             transform.eulerAngles = new Vector3(0f, 180f, 0f);
+        }
+        else 
+        {
+            animator.SetBool("isWalking", false);
         }
         
         
@@ -54,21 +59,25 @@ public class CharacterMove : MonoBehaviour
             _rigidbody.AddForce(Vector2.up * JUMP_FORCE);
         }
 
-        if (Input.GetKeyDown(KeyCode.K) && attackMode == AttackMode.Melee)
+        if (Input.GetMouseButtonDown(0) && attackMode == AttackMode.Melee)
         {
+            animator.SetBool("isAttacking", true);
             AttackMelee();
         }
         if (Input.GetMouseButtonDown(0) && attackMode == AttackMode.Ranged)
         {
+            animator.SetBool("isAttacking", true);
             AttackRanged();
         }
         
         if (Input.GetMouseButton(1))
         {
+            attackMode = AttackMode.Ranged;
             Time.timeScale = 0.5f;
         }
         else
         {
+            attackMode = AttackMode.Melee;
             Time.timeScale = 1f;
         }
         
@@ -92,10 +101,7 @@ public class CharacterMove : MonoBehaviour
             {
                 hit.rigidbody.AddForce((-hit.normal + Vector2.up) * 100f);                
             }
-
-            
             // coll.gameObject.GetComponent<Rigidbody2D>();
-
         }
     }
     
