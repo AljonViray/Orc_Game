@@ -7,10 +7,12 @@
         <e p="Scripts" t="Include">
           <e p="CameraFollow.cs" t="Include" />
           <e p="CharacterMove.cs" t="Include" />
-          <e p="EnemySwordman.cs" t="Include" />
+          <e p="EnemyAI.cs" t="Include" />
+          <e p="EnemyGrunt.cs" t="Include" />
           <e p="MainMenuSC.cs" t="Include" />
           <e p="ParallaxEffect.cs" t="Include" />
         </e>
+        <e p="spear.cs" t="Include" />
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">
             <e p="LiberationSans - OFL.txt" t="Include" />
