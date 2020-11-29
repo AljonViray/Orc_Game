@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySwordman : MonoBehaviour
+public class EnemyGrunt : MonoBehaviour
 {
     Rigidbody2D _rigidbody;
     public Transform attackPos;
     public float range = 3f;
     public float power = 300f;
     public float JUMP_FORCE = 300;
-
     private LayerMask playerMask;
     private int timer;
     private int movement;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,8 +70,6 @@ public class EnemySwordman : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        
         // Gizmos.DrawSphere(attackPos.position, range);
-    
     }
 }
