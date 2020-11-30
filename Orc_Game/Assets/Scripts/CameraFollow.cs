@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    // The Target
     public Transform target;
    
     // Update is called once per frame
@@ -12,7 +11,7 @@ public class CameraFollow : MonoBehaviour
     void LateUpdate() {
         // Afterwards we will simply use the Update function to always set the Camera's X position to the target's X position
         // Note: the X position is the horizontal position, while the Y position is our vertical position.
-        if(target == null) return;
+        if (target == null) return;
         transform.position = new Vector3(target.position.x,
                                         transform.position.y,
                                         transform.position.z);
