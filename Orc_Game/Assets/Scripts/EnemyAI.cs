@@ -67,7 +67,9 @@ public class EnemyAI : MonoBehaviour
         if (col.CompareTag("Player")) 
         {
             // Activate follow mode if it sees the player, even if player leaves vision
+            /*
             print("Player spotted!");
+            */
             sawPlayer = true;
         }
     }
@@ -79,7 +81,9 @@ public class EnemyAI : MonoBehaviour
         RaycastHit2D groundInfo = Physics2D.Raycast(turnDetector.position, Vector2.down, 1);
 
         // If a pit is detected ahead, turn around
+        /*
         print(groundInfo.collider);
+        */
         if (groundInfo.collider == false) {
             if (direction == Direction.Left) {
                 transform.eulerAngles = new Vector3(0, -180, 0);
@@ -94,7 +98,9 @@ public class EnemyAI : MonoBehaviour
         // If a wall is detected ahead, turn around
         if (direction == Direction.Left) {
             RaycastHit2D wallInfo = Physics2D.Raycast(turnDetector.position, Vector2.left, 0.1f);
+            /*
             print(wallInfo.collider);
+            */
             if (wallInfo.collider == true) {
                 transform.eulerAngles = new Vector3(0, -180, 0);
                 direction = Direction.Right;
@@ -102,7 +108,9 @@ public class EnemyAI : MonoBehaviour
         }
         else {
             RaycastHit2D wallInfo = Physics2D.Raycast(turnDetector.position, Vector2.right, 0.1f);
+            /*
             print(wallInfo.collider);
+            */
             if (wallInfo.collider == true) {
                 transform.eulerAngles = new Vector3(0, 0, 0);
                 direction = Direction.Left;

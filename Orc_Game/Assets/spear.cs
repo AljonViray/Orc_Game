@@ -6,21 +6,10 @@ using UnityEngine;
 public class spear : MonoBehaviour
 {
     public CharacterMove character;
-
+    public float spearDamage;
     public Rigidbody2D rb;
 
     public ParticleSystem impactSystem;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -36,10 +25,12 @@ public class spear : MonoBehaviour
             impactSystem.Play();
 
         }
-        else if (other.CompareTag("Enemy"))
+        else if (other.CompareTag("Enemy") && character.rangedState == CharacterMove.RangedState.Thrown)
         {
             //TODO: enemies take damage
-            rb.velocity = Vector2.zero;
+            other.GetComponent<EnemyHealth>().TakeDamage(spearDamage);
+            other.attachedRigidbody.AddForce(rb.velocity * 10f);
+
         }
     }
     private void OnTriggerStay2D(Collider2D other)
@@ -48,7 +39,6 @@ public class spear : MonoBehaviour
         if (other.CompareTag("Ground") && character.rangedState == CharacterMove.RangedState.Thrown)
         {
             rb.velocity = Vector2.zero;
-
         }
 
     }

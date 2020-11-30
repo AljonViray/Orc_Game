@@ -38,6 +38,10 @@ public class CharacterMove : MonoBehaviour
     public GameObject unequiped_spear;
     private Rigidbody2D rb_spear;
     public float throw_force = 1000f;
+    public float meleeDamage = 10f;
+
+    public Transform groundCheck;
+    public float groundCheckRadius;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +69,10 @@ public class CharacterMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space) && isGrounded())
+        {
+            _rigidbody.AddForce(Vector2.up * JUMP_FORCE);
+        }
         if (rangedState == RangedState.Holding)
         {
             spear.transform.position = transform.position;
@@ -87,10 +95,36 @@ public class CharacterMove : MonoBehaviour
                 attackMode = AttackMode.Ranged;
             }
         }
+        
         if (animator.GetBool("isAttacking"))
         {
             animator.SetBool("isAttacking", false);
         }
+        
+        if (Input.GetMouseButtonDown(0) && attackMode == AttackMode.Melee)
+        {
+            animator.SetBool("isAttacking", true);
+            AttackMelee();
+        }
+        if (Input.GetMouseButtonDown(0) && attackMode == AttackMode.Ranged)
+        {
+            AttackRanged();
+        }
+        
+        
+        if (_rigidbody.velocity.y < 1)
+        {
+            _rigidbody.gravityScale = 4;
+        }
+        else
+        {
+            _rigidbody.gravityScale = 2;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+
         // left right movement
         var movement = Input.GetAxisRaw("Horizontal");
 
@@ -113,34 +147,12 @@ public class CharacterMove : MonoBehaviour
         {
             animator.SetBool("isWalking", false);
         }
-        
-        
-        if(Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(_rigidbody.velocity.y) < 0.001f)
-        {
-            _rigidbody.AddForce(Vector2.up * JUMP_FORCE);
-        }
-
-        if (Input.GetMouseButtonDown(0) && attackMode == AttackMode.Melee)
-        {
-            animator.SetBool("isAttacking", true);
-            AttackMelee();
-        }
-        if (Input.GetMouseButtonDown(0) && attackMode == AttackMode.Ranged)
-        {
-            AttackRanged();
-        }
-        
-        
-        if (_rigidbody.velocity.y < 1)
-        {
-            _rigidbody.gravityScale = 4;
-        }
-        else
-        {
-            _rigidbody.gravityScale = 2;
-        }
     }
 
+    bool isGrounded()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, LayerMask.GetMask("Ground", "Enemy"));
+    }
     void HandleRanged()
     {
         if (Input.GetMouseButton(1))
@@ -170,7 +182,10 @@ public class CharacterMove : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, range, enemyMask);
             if (hit.collider != null)
             {
-                hit.rigidbody.AddForce((-hit.normal + Vector2.up) * 100f);                
+                hit.rigidbody.AddForce((-hit.normal + Vector2.up) * 100f);        
+                EnemyHealth eh = hit.transform.GetComponent<EnemyHealth>();
+                eh.TakeDamage(meleeDamage);
+                eh.bloodSplatter.Play();
             }
             // coll.gameObject.GetComponent<Rigidbody2D>();
         }
@@ -181,12 +196,7 @@ public class CharacterMove : MonoBehaviour
         Vector3 dir = _camera.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         //RaycastHit2D hit = Physics2D.Raycast(transform.position, dir.normalized, Mathf.Infinity, enemyMask);
         _rigidbody.AddForce((-dir) * recoil_strength);              
-
-        /*
-        if (hit.collider != null)
-        {
-            hit.rigidbody.AddForce((-hit.normal + Vector2.up) * 100f);              
-        }*/
+        
         
         rb_spear.AddForce(spear.transform.right * throw_force);
         rangedState = RangedState.Thrown;

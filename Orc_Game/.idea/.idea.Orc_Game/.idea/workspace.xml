@@ -21,10 +21,11 @@
   <component name="ChangeListManager">
     <list default="true" id="386896ba-8221-4aaa-96bc-c744c3aa5900" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Platform2d.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Platform2d.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CharacterMove.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EnemyAI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyAI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/spear.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/spear.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +36,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/EnemyHealth.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/spear.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -43,7 +45,9 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Squad.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Unit.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/EnemyAI.cs" />
         <option value="$PROJECT_DIR$/Assets/spear.cs" />
+        <option value="$PROJECT_DIR$/Assets/EnemyHealth.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CharacterMove.cs" />
       </list>
     </option>
@@ -102,7 +106,8 @@
       <workItem from="1605655826958" duration="4611000" />
       <workItem from="1605674979125" duration="3190000" />
       <workItem from="1606508092991" duration="6035000" />
-      <workItem from="1606685258466" duration="4495000" />
+      <workItem from="1606685258466" duration="5175000" />
+      <workItem from="1606767158104" duration="6377000" />
     </task>
     <servers />
   </component>
