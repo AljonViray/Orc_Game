@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8246925563087680445}
   - component: {fileID: 8246925563087680446}
   - component: {fileID: 8246925563087680447}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PlayerCharacter
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8246925563183850765}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
@@ -210,7 +210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8246925563789060279}
   - component: {fileID: 8246925563789060168}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AttackArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8246925564368742652}
   - component: {fileID: 8246925564368742653}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: unequiped spear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
