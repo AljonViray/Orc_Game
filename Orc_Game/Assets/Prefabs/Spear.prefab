@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1402358240029767714}
   - component: {fileID: 1402358240029767716}
   - component: {fileID: 1402358240029767717}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Impact Spear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4826,7 +4826,7 @@ GameObject:
   - component: {fileID: 1402358240773556277}
   - component: {fileID: 1402358240773556276}
   - component: {fileID: 1402358240773556279}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Spear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4840,7 +4840,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1402358240773556267}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.03, y: 1.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

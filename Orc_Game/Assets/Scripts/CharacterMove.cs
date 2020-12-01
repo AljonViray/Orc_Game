@@ -15,10 +15,11 @@ public class CharacterMove : MonoBehaviour
     public enum RangedState
     {
         Holding,
-        Thrown
+        Thrown,
+        Landed
     };
 
-    [HideInInspector] public RangedState rangedState = RangedState.Holding;
+    public RangedState rangedState = RangedState.Holding;
     
     
     public AttackMode attackMode = AttackMode.Melee;
@@ -95,7 +96,7 @@ public class CharacterMove : MonoBehaviour
                 attackMode = AttackMode.Ranged;
             }
         }
-        
+
         if (animator.GetBool("isAttacking"))
         {
             animator.SetBool("isAttacking", false);
@@ -151,7 +152,7 @@ public class CharacterMove : MonoBehaviour
 
     bool isGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, LayerMask.GetMask("Ground", "Enemy"));
+        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, LayerMask.GetMask("Ground", "Enemy", "Spear"));
     }
     void HandleRanged()
     {
@@ -182,7 +183,7 @@ public class CharacterMove : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, range, enemyMask);
             if (hit.collider != null)
             {
-                hit.rigidbody.AddForce((-hit.normal + Vector2.up) * 100f);        
+                hit.rigidbody.AddForce((-hit.normal + Vector2.up) * recoil_strength);        
                 EnemyHealth eh = hit.transform.GetComponent<EnemyHealth>();
                 eh.TakeDamage(meleeDamage);
                 eh.bloodSplatter.Play();
@@ -210,5 +211,11 @@ public class CharacterMove : MonoBehaviour
         spear.gameObject.SetActive(!spear.gameObject.activeSelf);
         unequiped_spear.gameObject.SetActive(!unequiped_spear.gameObject.activeSelf);
     }
-    
+
+    private void OnDrawGizmos()
+    {
+        /*
+        Gizmos.DrawSphere(transform.position, range);
+    */
+    }
 }
