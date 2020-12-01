@@ -8783,6 +8783,32 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1402358239453563526}
   m_PrefabAsset: {fileID: 0}
+--- !u!61 &1398702772
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398702765}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.081814766, y: -0.05843866}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 0.32, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.288424, y: 0.23652077}
+  m_EdgeRadius: 0
 --- !u!4 &1446017129 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8054717576821375941, guid: 6c710ae6b271d274896fabe02117d5db,
@@ -9469,6 +9495,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spear (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1402358240773556267, guid: e05f9ed2b84c09d43be5b2538345b426,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1402358240773556277, guid: e05f9ed2b84c09d43be5b2538345b426,
         type: 3}
       propertyPath: character
@@ -9714,6 +9745,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 1402358240773556267, guid: e05f9ed2b84c09d43be5b2538345b426,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1402358240773556277, guid: e05f9ed2b84c09d43be5b2538345b426,
         type: 3}
       propertyPath: character
@@ -9896,6 +9932,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spear (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1402358240773556267, guid: e05f9ed2b84c09d43be5b2538345b426,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1402358240773556277, guid: e05f9ed2b84c09d43be5b2538345b426,
         type: 3}
@@ -10385,6 +10426,11 @@ PrefabInstance:
       propertyPath: character
       value: 
       objectReference: {fileID: 1486732406}
+    - target: {fileID: 1402358240773556277, guid: e05f9ed2b84c09d43be5b2538345b426,
+        type: 3}
+      propertyPath: box
+      value: 
+      objectReference: {fileID: 1398702772}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e05f9ed2b84c09d43be5b2538345b426, type: 3}
 --- !u!1001 &8246925564555841480
@@ -10459,10 +10505,5 @@ PrefabInstance:
       propertyPath: spear
       value: 
       objectReference: {fileID: 1398702765}
-    - target: {fileID: 8246925563087680446, guid: e1175cedc90045044aaaff8af6941a04,
-        type: 3}
-      propertyPath: range
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1175cedc90045044aaaff8af6941a04, type: 3}

@@ -11,7 +11,8 @@ public class spear : MonoBehaviour
     public Rigidbody2D rb;
     public BoxCollider2D box;
     public ParticleSystem impactSystem;
-
+    public FixedJoint2D joint2D;
+    
     private void Start()
     {
         box.enabled = false;
@@ -23,22 +24,11 @@ public class spear : MonoBehaviour
         {
             if (Physics2D.OverlapCircle(transform.position, 1f, LayerMask.GetMask("Player")))
             {
-                Destroy(gameObject.GetComponent<FixedJoint2D>());
+                rb.constraints = RigidbodyConstraints2D.None;
                 character.rangedState = CharacterMove.RangedState.Holding;
                 box.enabled = false;
                 character.SwitchSpears();
             }
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        if (!col.rigidbody.CompareTag("Player"))
-        {
-            FixedJoint2D joint2D = gameObject.AddComponent<FixedJoint2D>();
-            joint2D.anchor = col.contacts[0].point;
-            joint2D.connectedBody = col.contacts[0].rigidbody;
-            joint2D.enableCollision = false;
         }
     }
 
@@ -47,6 +37,7 @@ public class spear : MonoBehaviour
         if (other.CompareTag("Ground") && character.rangedState == CharacterMove.RangedState.Thrown)
         {
             rb.velocity = Vector2.zero;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
             character.rangedState = CharacterMove.RangedState.Landed;
             box.enabled = true;
             impactSystem.Play();
