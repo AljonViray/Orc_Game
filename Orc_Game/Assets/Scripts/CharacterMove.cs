@@ -12,14 +12,16 @@ public class CharacterMove : MonoBehaviour
         Ranged,
         Melee
     };
-    public enum RangedState
+    /*public enum RangedState
     {
         Holding,
         Thrown,
         Landed
-    };
+    };*/
 
+    /*
     public RangedState rangedState = RangedState.Holding;
+    */
     
     
     public AttackMode attackMode = AttackMode.Melee;
@@ -35,9 +37,9 @@ public class CharacterMove : MonoBehaviour
     private Animator animator;
     
 
-    public GameObject spear;
+    public spear _spear;
     public GameObject unequiped_spear;
-    private Rigidbody2D rb_spear;
+    [HideInInspector]public Rigidbody2D rb_spear;
     public float throw_force = 1000f;
     public float meleeDamage = 10f;
 
@@ -51,19 +53,19 @@ public class CharacterMove : MonoBehaviour
         enemyMask = LayerMask.GetMask("Enemy");
         _camera = Camera.main;
         animator = GetComponent<Animator>();
-        rb_spear = spear.GetComponent<Rigidbody2D>();
-        
+        rb_spear = _spear.rb;
+        _spear.spearState = spear.SpearState.Holding;
+        _spear.box.enabled = false;
         // initialize which spear is active initially
         if (attackMode == AttackMode.Melee)
         {
             unequiped_spear.gameObject.SetActive(true);
-            spear.gameObject.SetActive(false);
+            _spear.gameObject.SetActive(false);
         }
         else
         {
             unequiped_spear.gameObject.SetActive(false);
-            spear.gameObject.SetActive(true);
-
+            _spear.gameObject.SetActive(true);
         }
     }
 
@@ -74,17 +76,17 @@ public class CharacterMove : MonoBehaviour
         {
             _rigidbody.AddForce(Vector2.up * JUMP_FORCE);
         }
-        if (rangedState == RangedState.Holding)
+        if (_spear.spearState == spear.SpearState.Holding)
         {
-            spear.transform.position = transform.position;
+            _spear.transform.position = transform.position;
         }
-        if (attackMode == AttackMode.Ranged && rangedState == RangedState.Holding)
+        if (attackMode == AttackMode.Ranged && _spear.spearState == spear.SpearState.Holding)
         {
             HandleRanged();
         }
         
         // switch from melee to ranged
-        if (Input.GetKeyDown(KeyCode.E) && rangedState == RangedState.Holding)
+        if (Input.GetKeyDown(KeyCode.E) && _spear.spearState == spear.SpearState.Holding)
         {
             SwitchSpears();
             if (attackMode == AttackMode.Ranged)
@@ -94,6 +96,19 @@ public class CharacterMove : MonoBehaviour
             else
             {
                 attackMode = AttackMode.Ranged;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            Collider2D temp = Physics2D.OverlapCircle(transform.position, 1f, LayerMask.GetMask("Spear"));
+            if (temp && temp.gameObject.CompareTag("Spear"))
+            {
+                rb_spear = temp.attachedRigidbody;
+                rb_spear.constraints = RigidbodyConstraints2D.None;
+                _spear = temp.gameObject.GetComponent<spear>();
+                _spear.spearState = spear.SpearState.Holding;
+                _spear.box.enabled = false;
+                SwitchSpears();
             }
         }
 
@@ -133,21 +148,28 @@ public class CharacterMove : MonoBehaviour
         {
             _rigidbody.AddForce( new Vector2(movement * MOVEMENT_SPEED, 0f) * Time.deltaTime);
         }
+        if (Mathf.Abs(_rigidbody.velocity.y) > max_velocity)
+        {
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, max_velocity * _rigidbody.velocity.normalized.y);
+        }
+        if (attackMode == AttackMode.Melee)
+        {
+            if (movement > 0)
+            {
+                animator.SetBool("isWalking", true);
+                transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            }
+            else if(movement < 0)
+            {
+                animator.SetBool("isWalking", true);
+                transform.eulerAngles = new Vector3(0f, 180f, 0f);
+            }
+            else 
+            {
+                animator.SetBool("isWalking", false);
+            }
+        }
 
-        if (movement > 0)
-        {
-            animator.SetBool("isWalking", true);
-            transform.eulerAngles = new Vector3(0f, 0f, 0f);
-        }
-        else if(movement < 0)
-        {
-            animator.SetBool("isWalking", true);
-            transform.eulerAngles = new Vector3(0f, 180f, 0f);
-        }
-        else 
-        {
-            animator.SetBool("isWalking", false);
-        }
     }
 
     bool isGrounded()
@@ -166,12 +188,21 @@ public class CharacterMove : MonoBehaviour
             Time.timeScale = 1f;
         }
         
-        spear.transform.position = transform.position;
+        _spear.transform.position = transform.position;
         Vector3 dir = _camera.ScreenToWorldPoint(Input.mousePosition);
         dir.z = 0;
-        float AngleRad = Mathf.Atan2 (dir.y - spear.transform.position.y, dir.x - spear.transform.position.x);
+        float AngleRad = Mathf.Atan2 (dir.y - _spear.transform.position.y, dir.x - _spear.transform.position.x);
         float angle = (180 / Mathf.PI) * AngleRad;
-        spear.transform.eulerAngles = new Vector3(0f, 0f, angle);
+        print(angle);
+        if (Mathf.Abs(angle) < 90f)
+        {
+            transform.eulerAngles = new Vector3(0f, 0f, 0f);
+        }
+        else if(Mathf.Abs(angle) > 90f)
+        {
+            transform.eulerAngles = new Vector3(0f, 180f, 0f);
+        }
+        _spear.transform.eulerAngles = new Vector3(0f, 0f, angle);
         
     }
 
@@ -199,8 +230,8 @@ public class CharacterMove : MonoBehaviour
         _rigidbody.AddForce((-dir) * recoil_strength);              
         
         
-        rb_spear.AddForce(spear.transform.right * throw_force);
-        rangedState = RangedState.Thrown;
+        rb_spear.AddForce(_spear.transform.right * throw_force);
+        _spear.spearState = spear.SpearState.Thrown;
         attackMode = AttackMode.Melee;
         Time.timeScale = 1f;
 
@@ -208,7 +239,7 @@ public class CharacterMove : MonoBehaviour
 
     public void SwitchSpears()
     {
-        spear.gameObject.SetActive(!spear.gameObject.activeSelf);
+        _spear.gameObject.SetActive(!_spear.gameObject.activeSelf);
         unequiped_spear.gameObject.SetActive(!unequiped_spear.gameObject.activeSelf);
     }
 

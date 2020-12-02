@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8246925563087680444}
   - component: {fileID: 8246925563087680443}
   - component: {fileID: 8246925563087680442}
-  - component: {fileID: 8246925563087680445}
   - component: {fileID: 8246925563087680446}
   - component: {fileID: 8246925563087680447}
+  - component: {fileID: 461575734}
   m_Layer: 12
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -109,22 +109,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!58 &8246925563087680445
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8246925563087680441}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.21773088, y: -0.007443428}
-  serializedVersion: 2
-  m_Radius: 0.45664072
 --- !u!114 &8246925563087680446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f596463431ff2d42841316fb67b443b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangedState: 0
   attackMode: 0
   MOVEMENT_SPEED: 1000
   JUMP_FORCE: 700
@@ -145,8 +128,9 @@ MonoBehaviour:
   max_velocity: 50
   attackPos: {fileID: 8246925563789060279}
   range: 1
-  spear: {fileID: 0}
+  _spear: {fileID: 0}
   unequiped_spear: {fileID: 8246925564368742651}
+  rb_spear: {fileID: 0}
   throw_force: 1000
   meleeDamage: 10
   groundCheck: {fileID: 8246925563183850765}
@@ -170,6 +154,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!70 &461575734
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8246925563087680441}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.69121546, y: 0.9495573}
+  m_Direction: 0
 --- !u!1 &8246925563183850764
 GameObject:
   m_ObjectHideFlags: 0

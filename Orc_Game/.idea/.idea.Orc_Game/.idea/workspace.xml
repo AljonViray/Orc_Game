@@ -20,8 +20,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="386896ba-8221-4aaa-96bc-c744c3aa5900" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/attack1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/attack1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/dead.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/dead.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/dying.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/dying.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/hurt.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/hurt.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/idle.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/idle.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Frictionless.physicsMaterial2D" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Frictionless.physicsMaterial2D.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/PlayerCharacter.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/PlayerCharacter.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Spear.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Spear.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CharacterMove.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/spear.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/spear.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,8 +54,8 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/EnemyAI.cs" />
         <option value="$PROJECT_DIR$/Assets/EnemyHealth.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterMove.cs" />
         <option value="$PROJECT_DIR$/Assets/spear.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterMove.cs" />
       </list>
     </option>
   </component>
@@ -104,7 +115,8 @@
       <workItem from="1606508092991" duration="6035000" />
       <workItem from="1606685258466" duration="5175000" />
       <workItem from="1606767158104" duration="7768000" />
-      <workItem from="1606854877431" duration="8939000" />
+      <workItem from="1606854877431" duration="8946000" />
+      <workItem from="1606939742369" duration="4600000" />
     </task>
     <servers />
   </component>

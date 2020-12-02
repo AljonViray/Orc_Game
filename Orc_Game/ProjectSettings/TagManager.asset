@@ -7,6 +7,7 @@ TagManager:
   - Squad
   - Enemy
   - Ground
+  - Spear
   layers:
   - Default
   - TransparentFX
