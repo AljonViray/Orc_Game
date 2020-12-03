@@ -37,7 +37,7 @@ public class CharacterMove : MonoBehaviour
     private Animator animator;
     
 
-    public spear _spear;
+    public Spear _spear;
     public GameObject unequiped_spear;
     [HideInInspector]public Rigidbody2D rb_spear;
     public float throw_force = 1000f;
@@ -54,9 +54,9 @@ public class CharacterMove : MonoBehaviour
         _camera = Camera.main;
         animator = GetComponent<Animator>();
         rb_spear = _spear.rb;
-        _spear.spearState = spear.SpearState.Holding;
+        _spear.spearState = Spear.SpearState.Holding;
         _spear.box.enabled = false;
-        // initialize which spear is active initially
+        // initialize which Spear is active initially
         if (attackMode == AttackMode.Melee)
         {
             unequiped_spear.gameObject.SetActive(true);
@@ -76,17 +76,17 @@ public class CharacterMove : MonoBehaviour
         {
             _rigidbody.AddForce(Vector2.up * JUMP_FORCE);
         }
-        if (_spear.spearState == spear.SpearState.Holding)
+        if (_spear.spearState == Spear.SpearState.Holding)
         {
             _spear.transform.position = transform.position;
         }
-        if (attackMode == AttackMode.Ranged && _spear.spearState == spear.SpearState.Holding)
+        if (attackMode == AttackMode.Ranged && _spear.spearState == Spear.SpearState.Holding)
         {
             HandleRanged();
         }
         
         // switch from melee to ranged
-        if (Input.GetKeyDown(KeyCode.E) && _spear.spearState == spear.SpearState.Holding)
+        if (Input.GetKeyDown(KeyCode.E) && _spear.spearState == Spear.SpearState.Holding)
         {
             SwitchSpears();
             if (attackMode == AttackMode.Ranged)
@@ -105,8 +105,8 @@ public class CharacterMove : MonoBehaviour
             {
                 rb_spear = temp.attachedRigidbody;
                 rb_spear.constraints = RigidbodyConstraints2D.None;
-                _spear = temp.gameObject.GetComponent<spear>();
-                _spear.spearState = spear.SpearState.Holding;
+                _spear = temp.gameObject.GetComponent<Spear>();
+                _spear.spearState = Spear.SpearState.Holding;
                 _spear.box.enabled = false;
                 SwitchSpears();
             }
@@ -140,7 +140,6 @@ public class CharacterMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         // left right movement
         var movement = Input.GetAxisRaw("Horizontal");
 
@@ -231,7 +230,7 @@ public class CharacterMove : MonoBehaviour
         
         
         rb_spear.AddForce(_spear.transform.right * throw_force);
-        _spear.spearState = spear.SpearState.Thrown;
+        _spear.spearState = Spear.SpearState.Thrown;
         attackMode = AttackMode.Melee;
         Time.timeScale = 1f;
 
