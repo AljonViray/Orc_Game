@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class CharacterMove : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-
     public enum AttackMode
     {
         Ranged,
@@ -46,6 +46,7 @@ public class CharacterMove : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,6 +73,10 @@ public class CharacterMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (transform.position.y <= -10) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
             _rigidbody.AddForce(Vector2.up * JUMP_FORCE);
@@ -175,6 +180,7 @@ public class CharacterMove : MonoBehaviour
     {
         return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, LayerMask.GetMask("Ground", "Enemy", "Spear"));
     }
+
     void HandleRanged()
     {
         if (Input.GetMouseButton(1))

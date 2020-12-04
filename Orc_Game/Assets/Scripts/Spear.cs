@@ -14,7 +14,7 @@ public class Spear : MonoBehaviour
     };
 
     public SpearState spearState = SpearState.Landed;
-    public CharacterMove character;
+    public PlayerMovement character;
     public float spearDamage;
     public Rigidbody2D rb;
     public BoxCollider2D box;

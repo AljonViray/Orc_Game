@@ -5,20 +5,21 @@ using UnityEngine;
 public class EnemyAI_Grunt : MonoBehaviour
 {
     Rigidbody2D rb;
-    Transform player;
+    Transform playerPos;
+    PlayerHealth playerHP;
     BoxCollider2D hitbox;
-    BoxCollider2D visionArea;
-    CircleCollider2D attackArea;
     Transform wallDetector;
     Transform groundDetector;
 
     public float normalMoveSpeed;
     public float chasingMoveSpeed;
+    public float maxVelocity;
     public float jumpForce;
     public bool sawPlayer;
     public bool grounded;
     public float turnTime;
     private float time;
+    private float randomJumpTimer;
 
     public enum Mode {Standing, StandAndTurn, Patrolling, Chasing};
     public Mode mode;
@@ -30,14 +31,14 @@ public class EnemyAI_Grunt : MonoBehaviour
     void Start() 
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.Find("PlayerCharacter").transform;
+        playerPos = GameObject.Find("PlayerCharacter").transform;
+        playerHP = GameObject.Find("PlayerCharacter").GetComponent<PlayerHealth>();
         hitbox = GetComponent<BoxCollider2D>();
-        visionArea = transform.GetChild(0).GetComponent<BoxCollider2D>();
-        attackArea = transform.GetChild(1).GetComponent<CircleCollider2D>();
         wallDetector = transform.GetChild(2);
         groundDetector = transform.GetChild(3);
         sawPlayer = false;
         grounded = true;
+        randomJumpTimer = Random.Range(1,5);
 
         // All enemies start by standing, then adjust in Update()
         Stand();
@@ -49,14 +50,14 @@ public class EnemyAI_Grunt : MonoBehaviour
         time += Time.deltaTime;
         
         // Test surroundings
-        RaycastHit2D groundInfo = Physics2D.Raycast(groundDetector.position, Vector2.down, 0.1f);
-        RaycastHit2D wallInfo = Physics2D.Raycast(wallDetector.position, Vector2.left, 0.1f);
+        Collider2D groundInfo = Physics2D.OverlapCircle(groundDetector.position, 0.1f, LayerMask.GetMask("Ground"));
+        RaycastHit2D wallInfo = Physics2D.Raycast(wallDetector.position, Vector2.left, 1, LayerMask.GetMask("Ground"));
         if (direction == Direction.Right) {
-            wallInfo = Physics2D.Raycast(wallDetector.position, Vector2.right, 0.1f);
+            wallInfo = Physics2D.Raycast(wallDetector.position, Vector2.right, 1, LayerMask.GetMask("Ground"));
         }
 
         // Check if grounded to allow jumping
-        if (groundInfo.collider == true && groundInfo.collider.CompareTag("Ground")) {
+        if (groundInfo == true) {
             grounded = true;
         }
         else {
@@ -65,9 +66,9 @@ public class EnemyAI_Grunt : MonoBehaviour
 
         // Regardless of inital mode, follow and attack player forever if they are seen
         if (sawPlayer) {
-            // Do a little hop to show alert
+            // Do a little white flash animation to show alert
             if (mode != Mode.Chasing) {
-                rb.AddForce(Vector2.up * jumpForce/2);
+                //animator.;
                 mode = Mode.Chasing;
             }
             else {
@@ -86,29 +87,48 @@ public class EnemyAI_Grunt : MonoBehaviour
         }
     }
 
-    // Detect player in enemy's vision area
-    void OnTriggerEnter2D (Collider2D col) 
+
+
+    // Public Functions //
+    public void SawPlayer()
     {
-        // PlayerCharacter was given tag "Player" in editor
-        if (col.CompareTag("Player")) 
-        {
-            // Activate follow mode if it sees the player, even if player leaves vision
-            print("Player spotted!");
-            sawPlayer = true;
+        sawPlayer = true;
+    }
+
+    public void CantSeePlayer()
+    {
+        sawPlayer = false;
+    }
+
+    public void KillPlayer()
+    {
+        mode = Mode.Standing;
+        playerHP.Die();
+    }
+
+    public void TurnAround()
+    {
+        if (direction == Direction.Left) {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+                direction = Direction.Right;
+        }
+        else {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+            direction = Direction.Left;
         }
     }
 
 
 
-    // Private Functions
-    private void Stand() 
+    // Private Functions //
+    private void Stand()
     {
         if (direction == Direction.Left) {
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else {
             transform.eulerAngles = new Vector3(0, 180, 0);
-        }    
+        }
     }
 
 
@@ -116,52 +136,52 @@ public class EnemyAI_Grunt : MonoBehaviour
     {
         // Alternate between left and right directions at constant rate
         if (time >= turnTime) {
-            if (direction == Direction.Left) {
-                transform.eulerAngles = new Vector3(0, 180, 0);
-                direction = Direction.Right;
-            }
-            else {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                direction = Direction.Left;
-            }
+            TurnAround();
             time = 0;  
         }
     }
 
 
-    private void Patrol(RaycastHit2D groundInfo, RaycastHit2D wallInfo) 
+    private void Patrol(Collider2D groundInfo, RaycastHit2D wallInfo) 
     {
         // Move in a given direction
         transform.Translate(Vector2.left * normalMoveSpeed * Time.deltaTime);
 
         // If a pit or a wall is detected ahead, turn around
-        if (groundInfo.collider == false || wallInfo.collider == true) {
-            if (direction == Direction.Left) {
-                transform.eulerAngles = new Vector3(0, 180, 0);
-                direction = Direction.Right;
-            }
-            else {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                direction = Direction.Left;
-            }
+        if (groundInfo == false || wallInfo.collider == true) {
+            TurnAround();
         }
     }
 
 
-    private void Chasing(RaycastHit2D groundInfo, RaycastHit2D wallInfo) 
+    private void Chasing(Collider2D groundInfo, RaycastHit2D wallInfo) 
     {
-        transform.Translate(Vector2.left * chasingMoveSpeed * Time.deltaTime);
-
-        // If a wall is detected ahead, try to jump (can cause enemies to fall into pits but it's funny)
-        if (direction == Direction.Left) {
-            if (wallInfo.collider == true && grounded) {
-                rb.AddForce(Vector2.up * jumpForce);
+        if (Mathf.Abs(rb.velocity.x) < maxVelocity)
+        {
+            if (direction == Direction.Left) {
+                rb.AddForce( new Vector2(-chasingMoveSpeed, 0f) * Time.deltaTime);
+            }
+            else {
+                rb.AddForce( new Vector2(chasingMoveSpeed, 0f) * Time.deltaTime);
             }
         }
+        if (Mathf.Abs(rb.velocity.y) > maxVelocity)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, maxVelocity * rb.velocity.normalized.y);
+        }
+
+        // Randomly jump a little while chasing
+        if (grounded && randomJumpTimer < 0) {
+            randomJumpTimer = Random.Range(1,5);
+            rb.AddForce(Vector2.up * jumpForce);
+        }
         else {
-            if (wallInfo.collider == true && grounded) {
-                rb.AddForce(Vector2.up * jumpForce);
-            }
+            randomJumpTimer -= Time.deltaTime;
+        }
+
+        // If a wall is detected ahead, try to jump (can cause enemies to fall into pits but it's funny)
+        if (wallInfo.collider != null && wallInfo.collider.gameObject.CompareTag("Ground") && grounded) {
+            rb.AddForce(Vector2.up * jumpForce);
         }
     }
 }
