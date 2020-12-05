@@ -12,18 +12,6 @@ public class PlayerMovement : MonoBehaviour
         Ranged,
         Melee
     };
-    /*public enum RangedState
-    {
-        Holding,
-        Thrown,
-        Landed
-    };*/
-
-    /*
-    public RangedState rangedState = RangedState.Holding;
-    */
-    
-    
     public AttackMode attackMode = AttackMode.Melee;
     public float MOVEMENT_SPEED = 1;
     public float JUMP_FORCE = 200;
@@ -46,11 +34,19 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius;
 
+    private PlayerHealth _playerHealth;
+    
 
-    // Start is called before the first frame update
+    public AudioClip jumpAudio;
+    public AudioClip landAudio;
+    public AudioClip throwAudio;
+    private AudioSource _audioSource;
+    /*private bool landed = true;
+    private bool grounded;*/
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        _audioSource = GetComponent<AudioSource>();
         enemyMask = LayerMask.GetMask("Enemy");
         _camera = Camera.main;
         animator = GetComponent<Animator>();
@@ -73,12 +69,25 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y <= -10) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        HandleInput();
+        
+        HandleAnimation();
+        
+        if (_rigidbody.velocity.y < 1)
+        {
+            _rigidbody.gravityScale = 4;
         }
-
+        else
+        {
+            _rigidbody.gravityScale = 2;
+        }
+    }
+    
+    private void HandleInput()
+    {
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
+            PlayAudio(jumpAudio);
             _rigidbody.AddForce(Vector2.up * JUMP_FORCE);
         }
         if (_spear.spearState == Spear.SpearState.Holding)
@@ -116,7 +125,10 @@ public class PlayerMovement : MonoBehaviour
                 SwitchSpears();
             }
         }
+    }
 
+    private void HandleAnimation()
+    {
         if (animator.GetBool("isAttacking"))
         {
             animator.SetBool("isAttacking", false);
@@ -129,24 +141,14 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0) && attackMode == AttackMode.Ranged)
         {
+            PlayAudio(throwAudio);
             AttackRanged();
         }
-        
-        
-        if (_rigidbody.velocity.y < 1)
-        {
-            _rigidbody.gravityScale = 4;
-        }
-        else
-        {
-            _rigidbody.gravityScale = 2;
-        }
     }
-
     private void FixedUpdate()
     {
         // left right movement
-        var movement = Input.GetAxisRaw("Horizontal");
+        float movement = Input.GetAxisRaw("Horizontal");
 
         if (Mathf.Abs(_rigidbody.velocity.x) < max_velocity)
         {
@@ -198,7 +200,6 @@ public class PlayerMovement : MonoBehaviour
         dir.z = 0;
         float AngleRad = Mathf.Atan2 (dir.y - _spear.transform.position.y, dir.x - _spear.transform.position.x);
         float angle = (180 / Mathf.PI) * AngleRad;
-        print(angle);
         if (Mathf.Abs(angle) < 90f)
         {
             transform.eulerAngles = new Vector3(0f, 0f, 0f);
@@ -234,7 +235,7 @@ public class PlayerMovement : MonoBehaviour
         //RaycastHit2D hit = Physics2D.Raycast(transform.position, dir.normalized, Mathf.Infinity, enemyMask);
         _rigidbody.AddForce((-dir) * recoil_strength);              
         
-        
+        rb_spear.velocity = Vector2.zero;
         rb_spear.AddForce(_spear.transform.right * throw_force);
         _spear.spearState = Spear.SpearState.Thrown;
         attackMode = AttackMode.Melee;
@@ -248,6 +249,11 @@ public class PlayerMovement : MonoBehaviour
         unequiped_spear.gameObject.SetActive(!unequiped_spear.gameObject.activeSelf);
     }
 
+    private void PlayAudio(AudioClip clip)
+    {
+        _audioSource.clip = clip;
+        _audioSource.Play();
+    }
     private void OnDrawGizmos()
     {
         /*

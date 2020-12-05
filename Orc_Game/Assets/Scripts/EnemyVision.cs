@@ -27,7 +27,6 @@ public class EnemyVision : MonoBehaviour
     {
         if (col.CompareTag("Player")) 
         {
-            print("turning");
             gruntAI.TurnAround();
         }
     }

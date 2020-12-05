@@ -5,12 +5,12 @@ using UnityEngine;
 public class EnemyAI_Grunt : MonoBehaviour
 {
     Rigidbody2D rb;
-    Transform playerPos;
-    PlayerHealth playerHP;
+
     BoxCollider2D hitbox;
     Transform wallDetector;
     Transform groundDetector;
-
+    [HideInInspector]public float damage = 15;
+    public float knockback = 1000f;
     public float normalMoveSpeed;
     public float chasingMoveSpeed;
     public float maxVelocity;
@@ -18,6 +18,7 @@ public class EnemyAI_Grunt : MonoBehaviour
     public bool sawPlayer;
     public bool grounded;
     public float turnTime;
+    public Vector2 randomJumpRange;
     private float time;
     private float randomJumpTimer;
 
@@ -25,20 +26,20 @@ public class EnemyAI_Grunt : MonoBehaviour
     public Mode mode;
     public enum Direction {Left, Right};
     public Direction direction;
+    [HideInInspector] public Animator _animator;
 
 
     // Unity Functions
-    void Start() 
+    void Start()
     {
+        _animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        playerPos = GameObject.Find("PlayerCharacter").transform;
-        playerHP = GameObject.Find("PlayerCharacter").GetComponent<PlayerHealth>();
         hitbox = GetComponent<BoxCollider2D>();
         wallDetector = transform.GetChild(2);
         groundDetector = transform.GetChild(3);
         sawPlayer = false;
         grounded = true;
-        randomJumpTimer = Random.Range(1,5);
+        randomJumpTimer = Random.Range(randomJumpRange.x,randomJumpRange.y);
 
         // All enemies start by standing, then adjust in Update()
         Stand();
@@ -99,12 +100,7 @@ public class EnemyAI_Grunt : MonoBehaviour
     {
         sawPlayer = false;
     }
-
-    public void KillPlayer()
-    {
-        mode = Mode.Standing;
-        playerHP.Die();
-    }
+    
 
     public void TurnAround()
     {
@@ -146,7 +142,10 @@ public class EnemyAI_Grunt : MonoBehaviour
     {
         // Move in a given direction
         transform.Translate(Vector2.left * normalMoveSpeed * Time.deltaTime);
-
+        
+        _animator.SetBool("isWalking", true);
+        _animator.SetBool("isIdle", false);
+        
         // If a pit or a wall is detected ahead, turn around
         if (groundInfo == false || wallInfo.collider == true) {
             TurnAround();
@@ -156,6 +155,9 @@ public class EnemyAI_Grunt : MonoBehaviour
 
     private void Chasing(Collider2D groundInfo, RaycastHit2D wallInfo) 
     {
+        _animator.SetBool("isWalking", true);
+        _animator.SetBool("isIdle", false);
+        
         if (Mathf.Abs(rb.velocity.x) < maxVelocity)
         {
             if (direction == Direction.Left) {
@@ -172,7 +174,7 @@ public class EnemyAI_Grunt : MonoBehaviour
 
         // Randomly jump a little while chasing
         if (grounded && randomJumpTimer < 0) {
-            randomJumpTimer = Random.Range(1,5);
+            randomJumpTimer = Random.Range(randomJumpRange.x,randomJumpRange.y);
             rb.AddForce(Vector2.up * jumpForce);
         }
         else {
@@ -184,4 +186,6 @@ public class EnemyAI_Grunt : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce);
         }
     }
+    
+
 }

@@ -32,19 +32,14 @@ public class Spear : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        /*if (spearState == SpearState.Landed && Input.GetKeyDown(KeyCode.E))
+        /*if (spearState == SpearState.Thrown)
         {
-            if (Physics2D.OverlapCircle(transform.position, 1f, LayerMask.GetMask("Player")))
-            {
-                rb.constraints = RigidbodyConstraints2D.None;
-                character._spear = this;
-                character.rb_spear = rb;
-                spearState = SpearState.Holding;
-                box.enabled = false;
-                character.SwitchSpears();
-            }
+            float angle = Mathf.Atan2(rb.velocity.y - transform.position.y, rb.velocity.x - transform.position.x);
+            angle = (180 / Mathf.PI) * angle;
+            transform.eulerAngles = new Vector3(0f, 0f, angle);
+            print(angle);
         }*/
     }
 
@@ -52,9 +47,9 @@ public class Spear : MonoBehaviour
     {
         if (other.CompareTag("Ground") && spearState == SpearState.Thrown)
         {
-            rb.velocity = Vector2.zero;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
-            spearState = SpearState.Thrown;
+            rb.velocity = Vector2.zero;
+            spearState = SpearState.Landed;
             box.enabled = true;
             impactSystem.Play();
 
@@ -72,8 +67,8 @@ public class Spear : MonoBehaviour
         // so it doesnt get stuck if thrown while inside a wall
         if (other.CompareTag("Ground") && spearState == SpearState.Thrown)
         {
-            rb.velocity = Vector2.zero;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            rb.velocity = Vector2.zero;
             spearState = SpearState.Landed;
             box.enabled = true;
             impactSystem.Play();
