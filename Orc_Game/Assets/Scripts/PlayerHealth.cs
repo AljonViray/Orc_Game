@@ -94,6 +94,5 @@ public class PlayerHealth : MonoBehaviour
         boxCollider.enabled = false;
         rb.constraints = RigidbodyConstraints2D.None;
  */
-
     }
 }

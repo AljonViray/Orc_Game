@@ -10,6 +10,8 @@ public class EnemyAttack : MonoBehaviour
     private PlayerHealth playerHP;
     private float damage;
     private float knockback;
+
+
     void Start()
     {
         gruntAI = transform.parent.GetComponent<EnemyAI_Grunt>();
@@ -25,10 +27,10 @@ public class EnemyAttack : MonoBehaviour
 
     void OnTriggerEnter2D (Collider2D col) 
     {
-        // PlayerCharacter was given tag "Player" in editor
         if (col.CompareTag("Player"))
         {
             gruntAI._animator.SetBool("isAttacking", true);
             playerHP.TakeDamage(damage, (-transform.right + transform.up) * knockback);
         }
-    }}
+    }
+}
