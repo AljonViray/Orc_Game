@@ -20,10 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="386896ba-8221-4aaa-96bc-c744c3aa5900" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/GruntMaterial.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/GruntMaterial.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Torch (1).prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Torch (1).prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Platform2d.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Platform2d.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Spear.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Spear.cs" afterDir="false" />
@@ -127,6 +124,7 @@
       <workItem from="1607057643048" duration="2640000" />
       <workItem from="1607115452555" duration="14210000" />
       <workItem from="1607221696835" duration="2842000" />
+      <workItem from="1607284961164" duration="1594000" />
     </task>
     <servers />
   </component>

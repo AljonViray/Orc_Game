@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float JUMP_FORCE = 200;
     public float recoil_strength = 100f;
     public float max_velocity;
-    Rigidbody2D _rigidbody;
+    [HideInInspector] public Rigidbody2D _rigidbody;
     public Transform attackPos;
     public float range = 1f;
     private LayerMask enemyMask;
