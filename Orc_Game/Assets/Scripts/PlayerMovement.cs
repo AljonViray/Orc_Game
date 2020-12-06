@@ -136,6 +136,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void EquipSpear(Spear s)
+    {
+        rb_spear = s.rb;
+        rb_spear.constraints = RigidbodyConstraints2D.None;
+        _spear = s;
+        _spear.spearState = Spear.SpearState.Holding;
+        _spear.box.enabled = false;
+        SwitchSpears();
+    }
     private void HandleAnimation()
     {
         if (animator.GetBool("isAttacking"))

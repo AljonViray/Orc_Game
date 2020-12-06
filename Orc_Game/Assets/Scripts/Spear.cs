@@ -19,7 +19,7 @@ public class Spear : MonoBehaviour
     public Rigidbody2D rb;
     public BoxCollider2D box;
     public ParticleSystem impactSystem;
-    
+    public float returnForce;
     private void Start()
     {
         if (spearState == SpearState.Landed)
@@ -32,15 +32,31 @@ public class Spear : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
+    private void Update()
     {
-        /*if (spearState == SpearState.Thrown)
+        if (this == character._spear)
         {
-            float angle = Mathf.Atan2(rb.velocity.y - transform.position.y, rb.velocity.x - transform.position.x);
-            angle = (180 / Mathf.PI) * angle;
-            transform.eulerAngles = new Vector3(0f, 0f, angle);
-            print(angle);
-        }*/
+            if (Input.GetKeyDown(KeyCode.E) && spearState == SpearState.Thrown)
+            {
+                Vector3 dir = character.transform.position - transform.position;
+                rb.velocity = rb.velocity.magnitude * dir.normalized;
+                float AngleRad = Mathf.Atan2 (dir.y - transform.position.y, dir.x - transform.position.x);
+                float angle = (180 / Mathf.PI) * AngleRad;
+                transform.eulerAngles = new Vector3(0f, 0f, angle);
+            }
+            else if (Input.GetKeyDown(KeyCode.E) && spearState == SpearState.Landed)
+            {
+                rb.constraints = RigidbodyConstraints2D.None;
+                Vector3 dir = character.transform.position - transform.position;
+                float AngleRad = Mathf.Atan2 (dir.y - transform.position.y, dir.x - transform.position.x);
+                float angle = (180 / Mathf.PI) * AngleRad;
+                transform.eulerAngles = new Vector3(0f, 0f, angle);
+            
+                rb.AddForce(dir.normalized * character.throw_force);
+                spearState = SpearState.Thrown;
+                character.attackMode = PlayerMovement.AttackMode.Melee;
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -59,7 +75,10 @@ public class Spear : MonoBehaviour
             //TODO: enemies take damage
             other.GetComponent<EnemyHealth>().TakeDamage(spearDamage);
             other.attachedRigidbody.AddForce(rb.velocity * 10f);
-
+        }
+        else if (other.CompareTag("Player") && spearState == SpearState.Thrown)
+        {
+            character.EquipSpear(this);
         }
     }
     private void OnTriggerStay2D(Collider2D other)
