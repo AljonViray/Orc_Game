@@ -73,11 +73,7 @@ public class PlayerMovement : MonoBehaviour
         {
             SceneManager.LoadScene("Platform2d");
         }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene("Platform2d");
-        }
+        
         HandleInput();
         
         HandleAnimation();

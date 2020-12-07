@@ -9821,7 +9821,7 @@ MonoBehaviour:
   turnTime: 3
   randomJumpRange: {x: 6, y: 10}
   mode: 0
-  direction: 0
+  direction: 1
   _animator: {fileID: 0}
 --- !u!114 &8054717576821375936
 MonoBehaviour:
@@ -9842,7 +9842,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c96e5eadcfaf4124d837a6cde583d8c6, type: 3}
   - {fileID: 8300000, guid: 384ab44f4eec1794b88ca97b838b90fa, type: 3}
   suchBrutality: {fileID: 8300000, guid: 405b1e246c7318f4ebda51dd65795239, type: 3}
-  suchBrutalityProbability: 1
+  suchBrutalityProbability: 0.2
 --- !u!61 &8054717576821375938
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9972,7 +9972,7 @@ MonoBehaviour:
   - {x: -0.29739836, y: 0.31652385, z: 0}
   m_ShapePathHash: -1759468407
   m_Mesh: {fileID: 0}
-  m_InstanceId: -399590
+  m_InstanceId: 39956
 --- !u!82 &7778005002937654124
 AudioSource:
   m_ObjectHideFlags: 0

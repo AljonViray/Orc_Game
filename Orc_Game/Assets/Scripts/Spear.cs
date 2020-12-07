@@ -19,7 +19,8 @@ public class Spear : MonoBehaviour
     public Rigidbody2D rb;
     public BoxCollider2D box;
     public ParticleSystem impactSystem;
-    public float returnForce;
+    public float speedDivider;
+    
     private void Start()
     {
         if (spearState == SpearState.Landed)
@@ -36,26 +37,32 @@ public class Spear : MonoBehaviour
     {
         if (this == character._spear)
         {
-            if (Input.GetKeyDown(KeyCode.E) && spearState == SpearState.Thrown)
+            if (Input.GetKey(KeyCode.E) && spearState == SpearState.Thrown)
             {
                 Vector3 dir = character.transform.position - transform.position;
                 rb.velocity = rb.velocity.magnitude * dir.normalized;
                 float AngleRad = Mathf.Atan2 (dir.y - transform.position.y, dir.x - transform.position.x);
                 float angle = (180 / Mathf.PI) * AngleRad;
+                /*
                 transform.eulerAngles = new Vector3(0f, 0f, angle);
+                */
+                transform.right = dir;
             }
-            else if (Input.GetKeyDown(KeyCode.E) && spearState == SpearState.Landed)
+            if (Input.GetKey(KeyCode.E) && spearState == SpearState.Landed)
             {
                 rb.constraints = RigidbodyConstraints2D.None;
                 box.enabled = false;
                 Vector3 dir = character.transform.position - transform.position;
                 float AngleRad = Mathf.Atan2 (dir.y - transform.position.y, dir.x - transform.position.x);
                 float angle = (180 / Mathf.PI) * AngleRad;
+                /*
                 transform.eulerAngles = new Vector3(0f, 0f, angle);
-            
-                rb.AddForce(dir.normalized * character.throw_force);
-                Debug.Log(dir.normalized * character.throw_force);
-                print(rb.velocity);
+                */
+                
+
+                transform.right = dir;
+
+                rb.velocity = dir.normalized * character.throw_force / speedDivider;
                 spearState = SpearState.Thrown;
                 character.attackMode = PlayerMovement.AttackMode.Melee;
             }

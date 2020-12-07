@@ -49,6 +49,7 @@ MonoBehaviour:
   - {fileID: 3735078964350698118}
   - {fileID: 4020826613827252694}
   - {fileID: 1409337226483682582}
+  - {fileID: 8187457824398138562}
 --- !u!114 &551287332846282565
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -202,26 +203,26 @@ MonoBehaviour:
   m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 1
-    m_Value: -0.11
+    m_Value: 0.21
   contrast:
     m_OverrideState: 1
-    m_Value: 33
+    m_Value: 70.98
     min: -100
     max: 100
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 0.79607844, g: 0.79607844, b: 0.79607844, a: 1}
+    m_Value: {r: 0.495283, g: 0.88130844, b: 1, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
   hueShift:
     m_OverrideState: 1
-    m_Value: 4.58
+    m_Value: 6
     min: -180
     max: 180
   saturation:
-    m_OverrideState: 1
-    m_Value: 12.86
+    m_OverrideState: 0
+    m_Value: 62.8
     min: -100
     max: 100
 --- !u!114 &4477156081952560621
@@ -240,11 +241,50 @@ MonoBehaviour:
   m_AdvancedMode: 0
   temperature:
     m_OverrideState: 1
-    m_Value: -44
+    m_Value: -61.9
     min: -100
     max: 100
   tint:
     m_OverrideState: 1
-    m_Value: 16
+    m_Value: 58.3
     min: -100
     max: 100
+--- !u!114 &8187457824398138562
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
+  m_Name: ShadowsMidtonesHighlights
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  shadows:
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 1, z: 1, w: -0.06745362}
+  midtones:
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 1, z: 1, w: -0.06745364}
+  highlights:
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 1, z: 1, w: 0.5059023}
+  shadowsStart:
+    m_OverrideState: 0
+    m_Value: 0
+    min: 0
+  shadowsEnd:
+    m_OverrideState: 0
+    m_Value: 0.3
+    min: 0
+  highlightsStart:
+    m_OverrideState: 0
+    m_Value: 0.55
+    min: 0
+  highlightsEnd:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
