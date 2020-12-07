@@ -52,7 +52,7 @@ public class EnemyAI_Grunt : MonoBehaviour
         
         // Test surroundings
         Collider2D groundInfo = Physics2D.OverlapCircle(groundDetector.position, 0.1f, LayerMask.GetMask("Ground"));
-        RaycastHit2D wallInfo = Physics2D.Raycast(wallDetector.position, Vector2.left, 1, LayerMask.GetMask("Ground"));
+        RaycastHit2D wallInfo = Physics2D.Raycast(wallDetector.position, Vector2.left, 1, LayerMask.GetMask("Ground", "Enemy", "Spear"));
         if (direction == Direction.Right) {
             wallInfo = Physics2D.Raycast(wallDetector.position, Vector2.right, 1, LayerMask.GetMask("Ground"));
         }

@@ -10,7 +10,8 @@ public class Spear : MonoBehaviour
     {
         Holding,
         Thrown,
-        Landed
+        Landed,
+        Returning
     };
 
     public SpearState spearState = SpearState.Landed;
@@ -20,6 +21,7 @@ public class Spear : MonoBehaviour
     public BoxCollider2D box;
     public ParticleSystem impactSystem;
     public float speedDivider;
+    public float recoil;
     
     private void Start()
     {
@@ -37,7 +39,7 @@ public class Spear : MonoBehaviour
     {
         if (this == character._spear)
         {
-            if (Input.GetKey(KeyCode.E) && spearState == SpearState.Thrown)
+            if (Input.GetKey(KeyCode.Mouse1) && (spearState == SpearState.Thrown || spearState == SpearState.Returning) )
             {
                 Vector3 dir = character.transform.position - transform.position;
                 rb.velocity = rb.velocity.magnitude * dir.normalized;
@@ -46,9 +48,11 @@ public class Spear : MonoBehaviour
                 /*
                 transform.eulerAngles = new Vector3(0f, 0f, angle);
                 */
+                spearState = SpearState.Returning;
+
                 transform.right = dir;
             }
-            if (Input.GetKey(KeyCode.E) && spearState == SpearState.Landed)
+            if (Input.GetKey(KeyCode.Mouse1) && spearState == SpearState.Landed)
             {
                 rb.constraints = RigidbodyConstraints2D.None;
                 box.enabled = false;
@@ -63,7 +67,7 @@ public class Spear : MonoBehaviour
                 transform.right = dir;
 
                 rb.velocity = dir.normalized * character.throw_force / speedDivider;
-                spearState = SpearState.Thrown;
+                spearState = SpearState.Returning;
                 character.attackMode = PlayerMovement.AttackMode.Melee;
             }
         }
@@ -71,48 +75,73 @@ public class Spear : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Ground") && spearState == SpearState.Thrown)
+        if (other.CompareTag("Ground") && (spearState == SpearState.Thrown || spearState == SpearState.Returning) )
         {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             rb.velocity = Vector2.zero;
             spearState = SpearState.Landed;
             box.enabled = true;
+
             impactSystem.Play();
 
         }
-        else if (other.CompareTag("Enemy") && spearState == SpearState.Thrown)
+        if (other.CompareTag("Enemy") && (spearState == SpearState.Thrown || spearState == SpearState.Returning))
         {
             //TODO: enemies take damage
             other.GetComponent<EnemyHealth>().TakeDamage(spearDamage);
             other.attachedRigidbody.AddForce(rb.velocity * 10f);
         }
-        else if (other.CompareTag("Player") && spearState == SpearState.Thrown)
+        /*if (other.CompareTag("Player") && spearState == SpearState.Returning)
         {
             character.EquipSpear(this);
             Vector3 dir = character.transform.position - transform.position;
-            character._rigidbody.AddForce(dir * character.throw_force);
-
-        }
+            character._rigidbody.AddForce(dir * recoil);
+        }*/
     }
     private void OnTriggerStay2D(Collider2D other)
     {
         // so it doesnt get stuck if thrown while inside a wall
-        if (other.CompareTag("Ground") && spearState == SpearState.Thrown)
+        if (other.CompareTag("Ground") && (spearState == SpearState.Thrown || spearState == SpearState.Returning))
         {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             rb.velocity = Vector2.zero;
             spearState = SpearState.Landed;
-            box.enabled = true;
+            if (Physics2D.OverlapCircle(transform.position, 0.5f, LayerMask.GetMask("Player")))
+            {
+                box.enabled = false;
+            }
+            else
+            {
+                box.enabled = true;
+            }
             impactSystem.Play();
         }
-        else if (other.CompareTag("Enemy") && spearState == SpearState.Thrown)
+        if (other.CompareTag("Enemy") && (spearState == SpearState.Thrown || spearState == SpearState.Returning))
         {
             //TODO: enemies take damage
             other.GetComponent<EnemyHealth>().TakeDamage(spearDamage);
             other.attachedRigidbody.AddForce(rb.velocity * 10f);
 
-        }
+        }        
+        /*if (other.CompareTag("Player") && spearState == SpearState.Returning)
+        {
+            character.EquipSpear(this);
+            Vector3 dir = character.transform.position - transform.position;
+            character._rigidbody.AddForce(dir * recoil);
+
+        }*/
 
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (box.enabled == false)
+            {
+                box.enabled = true;
+            }
+        }
+
+    }
 }

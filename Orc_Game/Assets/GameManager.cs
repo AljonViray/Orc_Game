@@ -12,5 +12,10 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene("Platform2d");
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 }

@@ -9812,15 +9812,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 20
   knockback: 2
-  normalMoveSpeed: 100
-  chasingMoveSpeed: 300
-  maxVelocity: 200
+  normalMoveSpeed: 300
+  chasingMoveSpeed: 600
+  maxVelocity: 300
   jumpForce: 500
   sawPlayer: 0
   grounded: 0
   turnTime: 3
   randomJumpRange: {x: 6, y: 10}
-  mode: 0
+  mode: 1
   direction: 1
   _animator: {fileID: 0}
 --- !u!114 &8054717576821375936
@@ -9972,7 +9972,7 @@ MonoBehaviour:
   - {x: -0.29739836, y: 0.31652385, z: 0}
   m_ShapePathHash: -1759468407
   m_Mesh: {fileID: 0}
-  m_InstanceId: 39956
+  m_InstanceId: -1250
 --- !u!82 &7778005002937654124
 AudioSource:
   m_ObjectHideFlags: 0

@@ -78,6 +78,13 @@ public class PlayerMovement : MonoBehaviour
         
         HandleAnimation();
         
+        if (_spear.spearState == Spear.SpearState.Returning && Vector3.Distance(_spear.transform.position, transform.position) < range)
+        {
+            EquipSpear(_spear);
+            Vector3 d = transform.position - _spear.transform.position;
+            _rigidbody.AddForce(d * _spear.recoil);
+        }
+        
         if (_rigidbody.velocity.y < 1)
         {
             _rigidbody.gravityScale = 4;
@@ -115,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 attackMode = AttackMode.Ranged;
+                _spear.box.enabled = false;
             }
         }
         else if (Input.GetKeyDown(KeyCode.E))
@@ -199,16 +207,7 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleRanged()
     {
-        if (Input.GetMouseButton(1))
-        {
-            attackMode = AttackMode.Ranged;
-            Time.timeScale = 0.5f;
-        }
-        else
-        {
-            Time.timeScale = 1f;
-        }
-        
+ 
         _spear.transform.position = transform.position;
         Vector3 dir = _camera.ScreenToWorldPoint(Input.mousePosition);
         dir.z = 0;
