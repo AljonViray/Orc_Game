@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
         Ranged,
         Melee
     };
+
+    private GameManager gm;
     public AttackMode attackMode = AttackMode.Melee;
     public float MOVEMENT_SPEED = 1;
     public float JUMP_FORCE = 200;
@@ -45,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
     private bool grounded;*/
     void Start()
     {
+        gm = FindObjectOfType<GameManager>();
+        transform.position = gm.lastCheckpoint;
         _rigidbody = GetComponent<Rigidbody2D>();
         _audioSource = GetComponent<AudioSource>();
         enemyMask = LayerMask.GetMask("Enemy");
