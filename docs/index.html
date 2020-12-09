@@ -17,7 +17,7 @@
             width: 800px;
             height: 50px;
             position: absolute;
-            top: 50%;
+            top: 30%;
             left: 50%;
             margin: -25px 0 0 -400px;
             font-size: 90px !important;
@@ -42,7 +42,7 @@
         .caption{
             color: #FFD700
          }
-        .github {
+        .play {
 
             margin: 20px;
             background-color: white;
@@ -108,11 +108,21 @@
             width: 70%;
             margin: auto;
         }
+        .github {
+            position:absolute;
+            top:0;
+            margin: 20px;
+            background-color: white;
+            border-color: #8f8f8f;
+            color: #8f8f8f;
+            z-index: 100; 
+        }
     </style>
 </head>
 
 <body>
     
+    <a class="btn btn-light github" href="https://github.com/Ohalawa1358/Orc_Game" role="button">GitHub</a>
 
     <div class="jumbotron">
          <h1 class="title">REVENGE OF THE ORC</h1>
@@ -190,7 +200,7 @@
                 <p>Evil monster or vengeful hero? Only the seeing can foretell. Nobody chooses to be born an orc. Skillful in close melee and ranged combat, the orc wields spears. The orc's adaptability and toughness makes it a formitable species.</p>
             </div>
             <div class="col-sm-3">
-                <img src="orc.png" alt="Orc">
+                <img style="float:right;" src="orc.png" alt="Orc">
             </div>
         </div>
         <div class="row content">
@@ -208,7 +218,7 @@
                 <p>Thought as the heroes of the land by many, does he show courage or arrogance? Some of the best warriors in the land, the knight has many special attacks. He is confident and will ensure his attacks do not miss.</p>
             </div>
             <div class="col-sm-3">
-                <img src="knight.png" alt="Knight">
+                <img style="float:right;" src="knight.png" alt="Knight">
             </div>
             </div>
         </div>
@@ -216,7 +226,7 @@
     </div>
 
     <footer>
-        <a class="btn btn-light github" href="https://github.com/Ohalawa1358/Orc_Game" role="button">PLAY</a>
+        <a class="btn btn-light play" href="https://github.com/Ohalawa1358/Orc_Game" role="button">PLAY</a>
     </footer>
 
 </body>
