@@ -22,9 +22,13 @@
     <list default="true" id="386896ba-8221-4aaa-96bc-c744c3aa5900" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Orc_Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/Campfire/campfire.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/Campfire/campfire.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/Campfire/unlit.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/Campfire/unlit.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Characters/default walk1 (eyes).png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Characters/default walk1 (eyes).png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/GruntMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/GruntMaterial.mat.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Campfire.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Campfire.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Platform2d.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Platform2d.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,6 +138,7 @@
       <workItem from="1607303857985" duration="966000" />
       <workItem from="1607370371639" duration="4509000" />
       <workItem from="1607544299866" duration="3730000" />
+      <workItem from="1607716515917" duration="1169000" />
     </task>
     <servers />
   </component>
