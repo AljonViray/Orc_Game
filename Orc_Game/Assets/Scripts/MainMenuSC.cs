@@ -10,10 +10,6 @@ public class MainMenuSC : MonoBehaviour
         SceneManager.LoadScene("Platform2d");
     }
     
-    public void PlayCastleLevel()
-    {
-        SceneManager.LoadScene("Castle");
-    }
     public void GoToCredits()
     {
         SceneManager.LoadScene("CreditsMenu");
