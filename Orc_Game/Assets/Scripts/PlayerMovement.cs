@@ -38,13 +38,23 @@ public class PlayerMovement : MonoBehaviour
 
     private PlayerHealth _playerHealth;
     
-
+    // Audio Variables
     public AudioClip jumpAudio;
     public AudioClip landAudio;
     public AudioClip throwAudio;
     private AudioSource _audioSource;
-    /*private bool landed = true;
-    private bool grounded;*/
+    
+    
+    // Animation Variables
+    private string currentState;
+    private const string PLAYER_IDLE = "Orc_Idle";
+    private const string PLAYER_WALK = "Orc_Walk";
+    private const string PLAYER_ATTACK = "Orc_Attack";
+    private const string PLAYER_HURT = "Orc_Hurt";
+    private const string PLAYER_DEATH = "Orc_Death";
+    private bool isAttacking = false;
+    private bool isHurt = false;
+    private bool isDead = false;
     void Start()
     {
         gm = FindObjectOfType<GameManager>();
@@ -155,14 +165,17 @@ public class PlayerMovement : MonoBehaviour
     }
     private void HandleAnimation()
     {
-        if (animator.GetBool("isAttacking"))
+        /*if (animator.GetBool("isAttacking"))
         {
             animator.SetBool("isAttacking", false);
-        }
+        }*/
         
-        if (Input.GetMouseButtonDown(0) && attackMode == AttackMode.Melee)
+        if (Input.GetMouseButtonDown(0) && attackMode == AttackMode.Melee && !isAttacking)
         {
-            animator.SetBool("isAttacking", true);
+
+            ChangeAnimationState(PLAYER_ATTACK);
+            isAttacking = true;
+            Invoke("ChangeAttackBool", .2f);
             AttackMelee();
         }
         if (Input.GetMouseButtonDown(0) && attackMode == AttackMode.Ranged)
@@ -171,11 +184,30 @@ public class PlayerMovement : MonoBehaviour
             AttackRanged();
         }
     }
+    
+    
     private void FixedUpdate()
     {
         // left right movement
         float movement = Input.GetAxisRaw("Horizontal");
 
+        if (isGrounded() && !isAttacking && !isHurt)
+        {
+            if (movement != 0)
+            {
+                ChangeAnimationState(PLAYER_WALK);
+            }
+            else
+            {
+                ChangeAnimationState(PLAYER_IDLE);
+            }            
+        }
+        else
+        {
+            if(!isAttacking && !isHurt) {ChangeAnimationState(PLAYER_IDLE);}
+        }
+
+        
         if (Mathf.Abs(_rigidbody.velocity.x) < max_velocity)
         {
             _rigidbody.AddForce( new Vector2(movement * MOVEMENT_SPEED, 0f) * Time.deltaTime);
@@ -188,17 +220,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (movement > 0)
             {
-                animator.SetBool("isWalking", true);
                 transform.eulerAngles = new Vector3(0f, 0f, 0f);
             }
             else if(movement < 0)
             {
-                animator.SetBool("isWalking", true);
                 transform.eulerAngles = new Vector3(0f, 180f, 0f);
-            }
-            else 
-            {
-                animator.SetBool("isWalking", false);
             }
         }
 
@@ -242,7 +268,6 @@ public class PlayerMovement : MonoBehaviour
                 eh.TakeDamage(meleeDamage);
                 eh.bloodSplatter.Play();
             }
-            // coll.gameObject.GetComponent<Rigidbody2D>();
         }
     }
     
@@ -271,10 +296,44 @@ public class PlayerMovement : MonoBehaviour
         _audioSource.clip = clip;
         _audioSource.Play();
     }
-    private void OnDrawGizmos()
+
+    public void ChangeAnimationState(string newState)
     {
-        /*
-        Gizmos.DrawSphere(transform.position, range);
-    */
+        // stops animation from cancelling itself
+        if (currentState == newState) return;
+        
+        // play animation
+        animator.Play(newState);
+
+        currentState = newState;
     }
+
+    public void PlayerTookDamage()
+    {
+        isHurt = true;
+        ChangeAnimationState(PLAYER_HURT);
+        Invoke("ChangeHitBool", 0.5f);
+    }
+    
+    public void PlayerDied()
+    {
+        isDead = true;
+        ChangeAnimationState(PLAYER_DEATH);
+        Invoke("RestartLevel", 2f);
+    }
+    private void ChangeHitBool()
+    {
+        isHurt = false;
+    }
+
+    private void ChangeAttackBool()
+    {
+        isAttacking = false;
+    }
+
+    private void RestartLevel()
+    {
+        gm.RestartLevel();
+    }
+    
 }

@@ -30,7 +30,7 @@ public class EnemyAttack : MonoBehaviour
         if (col.CompareTag("Player"))
         {
             gruntAI._animator.SetBool("isAttacking", true);
-            playerHP.TakeDamage(damage, (-transform.right + transform.up) * knockback);
+            playerHP.TakeDamage(damage, ((-transform.right + transform.up).normalized) * knockback);
         }
     }
 }

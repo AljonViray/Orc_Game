@@ -9972,7 +9972,7 @@ MonoBehaviour:
   - {x: -0.29739836, y: 0.31652385, z: 0}
   m_ShapePathHash: -1759468407
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1250
+  m_InstanceId: -1310
 --- !u!82 &7778005002937654124
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10148,3 +10148,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ab32189e83b2249ab43c97e1c301fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockback: 100

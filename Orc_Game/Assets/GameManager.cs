@@ -31,4 +31,9 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Platform2d");
         }
     }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene("Platform2d");
+    }
 }

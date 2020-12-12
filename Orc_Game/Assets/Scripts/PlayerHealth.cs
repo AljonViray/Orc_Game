@@ -26,12 +26,13 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private AudioClip hit = null;
     [SerializeField] private AudioClip dead = null;
     private AudioSource _audioSource;
-    private Animator animator;
-
+    
+    // Animator variables
+    private bool isHurt = false;
+    private bool isDead = false;
     public void Start()
     {
         _playerMovement = GetComponent<PlayerMovement>();
-        animator = GetComponent<Animator>();
         // init invincibility
         invincibilityStart = invincibility;
         invincibility = 0f;
@@ -43,10 +44,6 @@ public class PlayerHealth : MonoBehaviour
     private void LateUpdate()
     {
         invincibility -= Time.deltaTime;
-        if (animator.GetBool("isHurt"))
-        {
-            animator.SetBool("isHurt", false);
-        }
     }
 
     public void TakeDamage(float dmg, Vector3 dir)
@@ -55,16 +52,17 @@ public class PlayerHealth : MonoBehaviour
         {
             rb.AddForce((dir));
             health -= dmg;
+
             if (health <= 0)
             {
-                animator.SetBool("isDead", true);
+                _playerMovement.PlayerDied();
                 Die();
             }
             else
             {
                 _audioSource.clip = hit;
                 _audioSource.Play();
-                animator.SetBool("isHurt", true);
+                _playerMovement.PlayerTookDamage();
             }
             if (healthyRange.x <= health && healthyRange.y >= health)
             {
@@ -72,11 +70,11 @@ public class PlayerHealth : MonoBehaviour
             }
             else if (hurtRange.x <= health && hurtRange.y >= health)
             {
-                healthState = HealthState.Healthy;
+                healthState = HealthState.Hurt;
             }
             else if (dyingRange.x <= health && dyingRange.y >= health)
             {
-                healthState = HealthState.Healthy;
+                healthState = HealthState.Dying;
             }
 
             invincibility = invincibilityStart;
@@ -89,10 +87,6 @@ public class PlayerHealth : MonoBehaviour
         _audioSource.Play();
         healthState = HealthState.Dead;
         _playerMovement.enabled = false;
-        // die
-        /*deathGush.Play();
-        boxCollider.enabled = false;
-        rb.constraints = RigidbodyConstraints2D.None;
- */
     }
+    
 }
