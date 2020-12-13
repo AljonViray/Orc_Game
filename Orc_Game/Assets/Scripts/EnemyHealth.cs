@@ -43,10 +43,10 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        enemyScript._animator.SetBool("isHurt", false);
-    }
+    // private void LateUpdate()
+    // {
+    //     enemyScript._animator.SetBool("isHurt", false);
+    // }
 
     public void TakeDamage(float dmg)
     {
@@ -57,7 +57,7 @@ public class EnemyHealth : MonoBehaviour
         {
             _audioSource.Play();
         }
-        enemyScript._animator.SetBool("isHurt", true);
+        // enemyScript._animator.SetBool("isHurt", true);
         currentHealth -= dmg;
         if (currentHealth <= 0)
         {

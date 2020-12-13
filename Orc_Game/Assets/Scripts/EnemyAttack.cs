@@ -20,16 +20,16 @@ public class EnemyAttack : MonoBehaviour
         knockback = gruntAI.knockback;
     }
 
-    private void LateUpdate()
-    {
-        gruntAI._animator.SetBool("isAttacking", false);
-    }
+    // private void LateUpdate()
+    // {
+    //     gruntAI._animator.SetBool("isAttacking", false);
+    // }
 
     void OnTriggerEnter2D (Collider2D col) 
     {
         if (col.CompareTag("Player"))
         {
-            gruntAI._animator.SetBool("isAttacking", true);
+            // gruntAI._animator.SetBool("isAttacking", true);
             playerHP.TakeDamage(damage, ((-transform.right + transform.up).normalized) * knockback);
         }
     }
