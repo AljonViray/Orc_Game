@@ -8,11 +8,13 @@
         <e p="Scripts" t="Include">
           <e p="CameraFollow.cs" t="Include" />
           <e p="CheckPoint.cs" t="Include" />
+          <e p="EndOfLevel.cs" t="Include" />
           <e p="EnemyAI_Grunt.cs" t="Include" />
           <e p="EnemyAttack.cs" t="Include" />
           <e p="EnemyHealth.cs" t="Include" />
           <e p="EnemyVision.cs" t="Include" />
           <e p="MainMenuSC.cs" t="Include" />
+          <e p="Outofbounds.cs" t="Include" />
           <e p="ParallaxEffect.cs" t="Include" />
           <e p="PlayerHealth.cs" t="Include" />
           <e p="PlayerMovement.cs" t="Include" />
